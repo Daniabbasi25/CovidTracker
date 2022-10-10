@@ -3,7 +3,7 @@ import React from 'react';
 import {styles} from './styles';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 
-const OnBoardingScreen = () => {
+const OnBoardingScreen = ({navigation}) => {
   const myIcon = <Icon name="arrowright" size={20} color="#fff" />;
 
   return (
@@ -29,7 +29,7 @@ const OnBoardingScreen = () => {
             }}>
             GET STARTED
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
             <Text style={styles.arrowButton}>{myIcon}</Text>
           </TouchableOpacity>
         </View>

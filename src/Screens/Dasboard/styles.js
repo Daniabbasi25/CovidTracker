@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     height: '20%',
     alignSelf: 'center',
     justifyContent: 'space-between',
-    marginTop: height / 10,
+    marginTop: height / 28,
     borderRadius: 20,
     paddingLeft: '3%',
     flexDirection: 'row',

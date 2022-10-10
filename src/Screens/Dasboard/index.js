@@ -31,7 +31,7 @@ const Dashboard = () => {
   );
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       {/* <View style={styles.header}>
         <Image
           source={require('../../../accets/Images/Covid.png')}
