@@ -20,23 +20,49 @@ const Dashboard = ({route}) => {
   const [data, setdata] = useState();
   const [chartData, setChartData] = useState();
   const [isloading, setIsloading] = useState(true);
+  const [ischarloading, setIschartloading] = useState(true);
 
   const country = useSelector(state => state.country.country);
   useEffect(() => {
     const getWorldWideHistoryData = async () => {
       try {
         const response = await fetch(
-          `https://disease.sh/v3/covid-19/historical/all?lastdays=120`,
+          `https://disease.sh/v3/covid-19/historical/all?lastdays=5`,
         );
         const json = await response.json();
-
+        console.log('data for world wide json=', Object.keys(json.cases));
         const chartDatafun = buildChartData(json, 'cases');
-        setChartData(chartDatafun);
-        console.log('my data now of 1 country', JSON.stringify(chartData));
+        setChartData(json.cases);
+        console.log(
+          'my data now of world wide history country',
+          JSON.stringify(chartDatafun),
+        );
       } catch (error) {
         console.error(error);
       } finally {
-        setIsloading(false);
+        setIschartloading(false);
+      }
+    };
+    const getCountryHistoryData = async () => {
+      try {
+        const response = await fetch(
+          `https://disease.sh/v3/covid-19/historical/${country.value}?lastdays=5`,
+        );
+        const json = await response.json();
+        console.log(
+          'data for world wide json=',
+          Object.keys(json.timeline.cases),
+        );
+        const chartDatafun = buildChartData(json, 'cases');
+        setChartData(json.timeline.cases);
+        console.log(
+          'my data now of world wide history country',
+          JSON.stringify(chartDatafun),
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIschartloading(false);
       }
     };
     const getWorldWideData = async () => {
@@ -72,10 +98,11 @@ const Dashboard = ({route}) => {
     };
     if (dataFilter === 'country') {
       getcountryData();
+      getCountryHistoryData();
     } else if (dataFilter === 'Worldwide') {
       getWorldWideData();
+      getWorldWideHistoryData();
     }
-    getWorldWideHistoryData();
   }, [country, dataFilter]);
   const myIcon = (
     <Icon
@@ -93,7 +120,7 @@ const Dashboard = ({route}) => {
       if (lastdatePoint) {
         const newDataPoint = {
           x: date,
-          y: data[casesTypes][data] - lastdatePoint,
+          y: data.cases[data] - lastdatePoint,
         };
         chartData.push(newDataPoint);
       }
@@ -111,6 +138,8 @@ const Dashboard = ({route}) => {
         />
       </View> */}
       {isloading ? (
+        <ActivityIndicator />
+      ) : ischarloading ? (
         <ActivityIndicator />
       ) : (
         <ScrollView>
@@ -294,17 +323,10 @@ const Dashboard = ({route}) => {
           <View>
             <LineChart
               data={{
-                labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                ],
+                labels: Object.keys(chartData),
                 datasets: [
                   {
-                    data: [Math.random * 100],
+                    data: Object.values(chartData),
                   },
                 ],
               }}

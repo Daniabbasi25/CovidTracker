@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   headerBox: {
     backgroundColor: '#CFE3FC',
     width: width / 1.05,
-    height: '20%',
+    height: '15%',
     alignSelf: 'center',
     justifyContent: 'space-between',
     marginTop: height / 28,
