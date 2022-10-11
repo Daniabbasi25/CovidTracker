@@ -16,20 +16,18 @@ import Dashboard from './src/Screens/Dasboard';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import {Provider} from 'react-redux';
-import {store} from './store';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {addCountry} from './redux/CountrySlice';
 
 const {width, height} = Dimensions.get('window');
 const App = () => {
   const [countries, setmyCountries] = useState([{}]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isloading, setIsloading] = useState(true);
-  const [selectedCountry, setSelectedCountry] = useState({
-    flag: 'https://disease.sh/assets/img/flags/pk.png',
-    name: 'Pakistan',
-    value: 'PK',
-  });
 
+  const dispatch = useDispatch();
+  const selectedC = useSelector(state => state.country.country);
   useEffect(() => {
     const getcountries = async () => {
       try {
@@ -68,103 +66,100 @@ const App = () => {
     setModalVisible(true);
   };
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {isloading ? (
-          <ActivityIndicator />
-        ) : (
-          <>
-            <Stack.Navigator initialRouteName="OnBoardingScreen">
-              <Stack.Screen
-                name="OnBoardingScreen"
-                component={OnBoardingScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Dashboard"
-                component={Dashboard}
-                options={{
-                  headerBackVisible: false,
-                  headerShadowVisible: false,
-                  headerTitle: ' ',
-                  headerLeft: () => (
-                    <Image
-                      source={require('./accets/Images/Covid.png')}
-                      style={{width: 50, height: 50}}
-                    />
-                  ),
-                  headerRight: () => (
-                    <TouchableOpacity
-                      onPress={() => handlecountry()}
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(203,193,219,0.2)',
-                        paddingHorizontal: 5,
-                        paddingVertical: 5,
-                        borderRadius: 20,
-                      }}>
-                      <Image
-                        source={{
-                          uri: selectedCountry.flag,
-                        }}
-                        style={{width: 30, height: 30, borderRadius: 30}}
-                      />
-                      {myIcon}
-                    </TouchableOpacity>
-                  ),
-                }}
-                initialParams={selectedCountry}
-              />
-            </Stack.Navigator>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-                setModalVisible(!modalVisible);
-              }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <FlatList
-                    data={countries}
-                    renderItem={item => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setSelectedCountry(item.item);
-                          setModalVisible(false);
-                        }}>
-                        <View style={styles.countrtyItem}>
-                          <Image
-                            source={{
-                              uri: item.item.flag,
-                            }}
-                            style={{width: 30, height: 30, borderRadius: 30}}
-                          />
-                          <Text style={styles.modalText}>{item.item.name}</Text>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                    style={{
-                      height: height / 1.4,
-                      width: width / 1.2,
-                    }}
+    <NavigationContainer>
+      {isloading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <Stack.Navigator initialRouteName="OnBoardingScreen">
+            <Stack.Screen
+              name="OnBoardingScreen"
+              component={OnBoardingScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              component={Dashboard}
+              options={{
+                headerBackVisible: false,
+                headerShadowVisible: false,
+                headerTitle: ' ',
+                headerLeft: () => (
+                  <Image
+                    source={require('./accets/Images/Covid.png')}
+                    style={{width: 50, height: 50}}
                   />
+                ),
+                headerRight: () => (
+                  <TouchableOpacity
+                    onPress={() => handlecountry()}
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      backgroundColor: 'rgba(203,193,219,0.2)',
+                      paddingHorizontal: 5,
+                      paddingVertical: 5,
+                      borderRadius: 20,
+                    }}>
+                    <Image
+                      source={{
+                        uri: selectedC.flag,
+                      }}
+                      style={{width: 30, height: 30, borderRadius: 30}}
+                    />
+                    {myIcon}
+                  </TouchableOpacity>
+                ),
+              }}
+            />
+          </Stack.Navigator>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <FlatList
+                  data={countries}
+                  renderItem={item => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(addCountry(item.item));
+                        setModalVisible(false);
+                      }}>
+                      <View style={styles.countrtyItem}>
+                        <Image
+                          source={{
+                            uri: item.item.flag,
+                          }}
+                          style={{width: 30, height: 30, borderRadius: 30}}
+                        />
+                        <Text style={styles.modalText}>{item.item.name}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  style={{
+                    height: height / 1.4,
+                    width: width / 1.2,
+                  }}
+                />
 
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text style={styles.textStyle}>Cancel</Text>
-                  </Pressable>
-                </View>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </Pressable>
               </View>
-            </Modal>
-          </>
-        )}
-      </NavigationContainer>
-    </Provider>
+            </View>
+          </Modal>
+        </>
+      )}
+    </NavigationContainer>
   );
 };
 
