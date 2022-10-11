@@ -6,7 +6,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {
   LineChart,
@@ -18,9 +18,12 @@ import {
 } from 'react-native-chart-kit';
 import {styles} from './styles';
 
-const Dashboard = () => {
+const Dashboard = ({route}) => {
+  console.log(route.params);
   const [isTracker, setIsTracker] = useState(true);
   const [dataFilter, setDataFilter] = useState('country');
+  const [data, setdata] = useState();
+  useEffect(() => {}, []);
   const myIcon = (
     <Icon
       name="long-arrow-right"
