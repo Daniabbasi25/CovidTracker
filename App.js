@@ -9,6 +9,7 @@ import {
   Dimensions,
   FlatList,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import OnBoardingScreen from './src/Screens/onBoarding';
@@ -25,7 +26,8 @@ const App = () => {
   const [countries, setmyCountries] = useState([{}]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isloading, setIsloading] = useState(true);
-
+  const [search, setSearch] = useState();
+  const [copyList, setCopyList] = useState();
   const dispatch = useDispatch();
   const selectedC = useSelector(state => state.country.country);
   useEffect(() => {
@@ -44,6 +46,7 @@ const App = () => {
 
         console.log('my data now', JSON.stringify(response));
         setmyCountries(c);
+        setCopyList(c);
         console.log('ccccccccccc=', countries);
       } catch (error) {
         console.error(error);
@@ -61,6 +64,21 @@ const App = () => {
       color="#000"
     />
   );
+  const handleSearch = val => {
+    if (val) {
+      const newData = countries.filter(item => {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = val.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      // serchFilter(newData);
+      setCopyList(newData);
+    } else {
+      setCopyList(countries);
+      // serchFilter(result);
+    }
+    setSearch(val);
+  };
   const handlecountry = () => {
     console.log('cliecked');
     setModalVisible(true);
@@ -124,8 +142,17 @@ const App = () => {
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
+                <View>
+                  <TextInput
+                    placeholder="search Country"
+                    style={styles.countrtyItem}
+                    placeholderTextColor="#000"
+                    value={search}
+                    onChangeText={val => handleSearch(val)}
+                  />
+                </View>
                 <FlatList
-                  data={countries}
+                  data={copyList}
                   renderItem={item => (
                     <TouchableOpacity
                       onPress={() => {

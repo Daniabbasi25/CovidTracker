@@ -27,7 +27,7 @@ const Dashboard = ({route}) => {
     const getWorldWideHistoryData = async () => {
       try {
         const response = await fetch(
-          `https://disease.sh/v3/covid-19/historical/all?lastdays=5`,
+          `https://disease.sh/v3/covid-19/historical/all?lastdays=10`,
         );
         const json = await response.json();
         console.log('data for world wide json=', Object.keys(json.cases));
@@ -112,7 +112,7 @@ const Dashboard = ({route}) => {
     );
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {/* <View style={styles.header}>
         <Image
           source={require('../../../accets/Images/Covid.png')}
@@ -124,8 +124,19 @@ const Dashboard = ({route}) => {
       ) : ischarloading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView style={{backgroundColor: '#fff'}}>
-          <View style={styles.headerBox}>
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+            flex: 1,
+            width: Dimensions.get('window').width,
+          }}>
+          <View
+            style={[
+              styles.headerBox,
+              !isTracker
+                ? {height: Dimensions.get('window').height / 5.8}
+                : {height: '15%'},
+            ]}>
             <Image
               source={require('../../../accets/Images/Design.png')}
               style={styles.doctorImage}
@@ -250,7 +261,7 @@ const Dashboard = ({route}) => {
                 }}
                 width={Dimensions.get('window').width} // from react-native
                 height={320}
-                yAxisInterval={10} // optional, defaults to 1
+                yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
                   backgroundColor: '#fff',
                   backgroundGradientFrom: '#fff',

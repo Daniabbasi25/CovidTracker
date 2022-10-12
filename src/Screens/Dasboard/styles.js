@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   headerBox: {
     backgroundColor: '#CFE3FC',
     width: width / 1.05,
-    height: '15%',
+    // height: '15%',
     alignSelf: 'center',
     justifyContent: 'flex-start',
     marginTop: height / 28,
@@ -22,6 +22,9 @@ export const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // marginBottom: '5%',
     position: 'absolute',
+    // height: height / 5,
+    // resizeMode: 'contain',
+    // backgroundColor: 'red',
   },
   buttonBox: {
     flexDirection: 'row',
@@ -29,7 +32,7 @@ export const styles = StyleSheet.create({
     width: width / 1.05,
     backgroundColor: 'rgba(244, 158, 111, 0.4)',
     alignSelf: 'center',
-    marginTop: 25,
+    marginTop: 5,
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
