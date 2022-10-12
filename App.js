@@ -70,7 +70,7 @@ const App = () => {
       {isloading ? (
         <ActivityIndicator />
       ) : (
-        <>
+        <View style={{flex: 1}}>
           <Stack.Navigator initialRouteName="OnBoardingScreen">
             <Stack.Screen
               name="OnBoardingScreen"
@@ -157,7 +157,7 @@ const App = () => {
               </View>
             </View>
           </Modal>
-        </>
+        </View>
       )}
     </NavigationContainer>
   );
