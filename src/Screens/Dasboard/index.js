@@ -106,8 +106,76 @@ const Dashboard = ({route}) => {
 
   const Symptoms = () => {
     return (
-      <View>
-        <Text>THis is Symptoms</Text>
+      <View style={[styles.bigBoxes, {justifyContent: 'space-evenly'}]}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            padding: 20,
+            shadowColor: '#000',
+            fontSize: 15,
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 5,
+            elevation: 5,
+            borderRadius: 20,
+            // justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={require('../../../accets/Images/headache.png')}
+            style={{width: 60, height: 60}}
+          />
+          <Text>Headache</Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            padding: 20,
+            shadowColor: '#000',
+            fontSize: 15,
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 5,
+            elevation: 5,
+            borderRadius: 20,
+            // justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={require('../../../accets/Images/caugh.png')}
+            style={{width: 60, height: 60}}
+          />
+          <Text>Cough</Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            padding: 20,
+            shadowColor: '#000',
+            fontSize: 15,
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 5,
+            elevation: 5,
+            borderRadius: 20,
+            // justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={require('../../../accets/Images/fever.png')}
+            style={{width: 60, height: 60}}
+          />
+          <Text>Fever</Text>
+        </View>
       </View>
     );
   };
