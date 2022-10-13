@@ -2,16 +2,16 @@ Covid 19 tracker that will track covid reports from all over the world and repre
 
 <table>
   <tr>
-    <td width="33%">
+    <td width="23%">
       <img src="./img/1.png" />
     </td>
-    <td width="33%">
+    <td width="23%">
       <img src="./img/2.png" />
     </td>
-    <td width="33%">
+    <td width="23%">
       <img src="./img/3.png" />
     </td>
-    <td width="33%">
+    <td width="23%">
       <img src="./img/4.png" />
     </td>
   </tr>
